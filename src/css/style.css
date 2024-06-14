@@ -13,13 +13,24 @@
     /* colors */
     --text_main: hsl(0, 0%, 19%);
     --black: hsl(0, 0%, 12%);
-    --black_intense: hsl(0, 0%, 0%);
+    --black_active: hsl(0, 0%, 0%);
+    --gray: hsl(0, 0%, 36%);
+    --gray_lighter: hsl(0, 0%, 44%);
+    --gray_light: hsl(0, 0%, 82%);
+    --gray_lightest: hsl(0, 0%, 84%);
     --white: hsl(0, 0%, 100%);
+    --beige: hsl(29, 32%, 87%);
+    --beige_text: hsl(30, 5%, 39%);
     --yellow: hsl(44, 96%, 65%);
-    --yellow_intense: hsl(44, 96%, 55%);
+    --yellow_active: hsl(44, 96%, 55%);
+    --red: hsl(7, 91%, 58%);
+    --blue: hsl(219, 54%, 41%);
+    --blue_hover: hsl(219, 54%, 60%);
+    --blue_active: hsl(219, 54%, 20%);
 
     /* transition */
     --short: .2s;
+    --transition_btn: color var(--short) ease-in-out, background-color var(--short) ease-in-out;
 }
 
 
@@ -92,11 +103,15 @@ body {
 }
 
 h1,
-p {
+h2,
+p,
+ol {
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 a {
+    display: inline-block;
     color: inherit;
     text-decoration: none;
 }
@@ -105,6 +120,21 @@ img,
 svg {
     max-width: 100%;
     height: auto;
+    object-fit: cover;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+button {
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    outline: none;
 }
 
 *,
@@ -136,16 +166,13 @@ svg {
 }
 
 .btn {
-    display: inline-block;
     max-width: 263px;
     border-radius: 66px;
-    padding: 15px 49px;
+    padding: 14px 49px 13px;
     font-size: 16px;
     line-height: 1.3;
     text-align: center;
-    transition: color var(--short) ease-in-out, background-color var(--short) ease-in-out;
-    outline: none;
-    cursor: pointer;
+    transition: var(--transition_btn);
 }
 
 .btn_filled {
@@ -160,7 +187,7 @@ svg {
 }
 
 .btn_filled:active {
-    background-color: var(--yellow_intense);
+    background-color: var(--yellow_active);
 }
 
 .btn_outlined {
@@ -176,7 +203,84 @@ svg {
 }
 
 .btn_outlined:active {
-    background-color: var(--black_intense);
+    background-color: var(--black_active);
+}
+
+.heading-1,
+.heading-2 {
+    font-family: 'Merriweather';
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.heading-1 {
+    font-size: 60px;
+    line-height: 1.1;
+}
+
+.heading-2 {
+    font-size: 54px;
+}
+
+.text_red {
+    font-weight: 700;
+    color: var(--red);
+}
+
+.text_blue {
+    color: var(--blue);
+}
+
+.text_linethrough {
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: var(--red) line-through;
+}
+
+.nav-btn {
+    position: relative;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--text_main);
+    transition: background-color var(--short) ease-in;
+}
+
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 13px / 2);
+    width: 13px;
+    height: 13px;
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.nav-btn_prev::before {
+    left: calc(54% - 13px / 2);
+    border-left: 2px solid var(--white);
+    border-bottom: 2px solid var(--white);
+}
+
+.nav-btn_next::before {
+    left: calc(46% - 13px / 2);
+    border-top: 2px solid var(--white);
+    border-right: 2px solid var(--white);
+}
+
+.nav-btn:focus-visible,
+.nav-btn:hover {
+    background-color: var(--yellow);
+}
+
+.nav-btn:active {
+    background-color: var(--yellow_active);
+}
+
+.nav-btn_disabled {
+    background-color: var(--gray_lightest);
+    cursor: auto;
 }
 
 
@@ -196,22 +300,17 @@ svg {
 }
 
 .hero__info {
-    margin-bottom: 37px;
+    margin-bottom: 39px;
 }
 
 .hero__title {
     margin-bottom: 24px;
-    font-family: 'Merriweather';
-    font-size: 60px;
-    line-height: 1.1;
-    letter-spacing: -1px;
-    text-transform: uppercase;
 }
 
 .hero__title_shift {
     display: flex;
     justify-content: end;
-    text-indent: 55px;
+    text-indent: 57px;
 }
 
 .hero__text {
@@ -222,5 +321,329 @@ svg {
 
 .hero__links {
     display: flex;
-    gap: 11px;
+    gap: 16px;
+}
+
+
+/* ============================== MARQUEE ============================== */
+.marquee {
+    display: flex;
+    width: 100vw;
+    max-width: 100%;
+    padding-top: 18px;
+    padding-bottom: 17px;
+    background-color: var(--red);
+    overflow-x: hidden;
+}
+
+.marquee__content {
+    font-family: 'Merriweather';
+    font-size: 22px;
+    line-height: 1.1;
+    color: var(--white);
+    white-space: nowrap;
+    will-change: transform;
+    text-transform: uppercase;
+}
+
+.marquee__content::after {
+    content: 'Дело помощи утопающим — дело рук самих утопающих! • Шахматы двигают вперед не только культуру, но и экономику! • Лед тронулся, господа присяжные заседатели! •';
+}
+
+.marquee__content-1 {
+    animation: marquee1 50s linear infinite;
+    animation-delay: -60s;
+}
+
+.marquee__content-2 {
+    animation: marquee2 50s linear infinite;
+    animation-delay: -50s;
+}
+
+/* TODO настроить анимацию */
+/*@keyframes marquee1 {*/
+/*    0% {*/
+/*        transform: translateX(100%);*/
+/*    }*/
+/*    100% {*/
+/*        transform: translateX(-100%);*/
+/*    }*/
+/*}*/
+
+/*@keyframes marquee2 {*/
+/*    0% {*/
+/*        transform: translateX(0%);*/
+/*    }*/
+/*    100% {*/
+/*        transform: translateX(-200%);*/
+/*    }*/
+/*}*/
+
+
+/* ============================== EVENTS ============================== */
+.events {
+    padding-top: 80px;
+    padding-bottom: 94px;
+}
+
+.events .container:nth-child(1) {
+    margin-bottom: 36px;
+}
+
+.events .container:nth-child(2) {
+    padding-left: 44px;
+}
+
+.events__item-1 {
+    padding-top: 28px;
+    padding-right: 458px;
+    padding-bottom: 28px;
+    background: transparent url('../img/event-1.png') no-repeat right center / contain;
+}
+
+.events__item-2 {
+    padding-top: 28px;
+    padding-left: 547px;
+    padding-bottom: 14px;
+    background: transparent url('../img/event-2.png') no-repeat left center / contain;
+}
+
+.events__item-2 .events__text {
+    margin-bottom: 60px;
+}
+
+.events__text {
+    font-family: 'Merriweather';
+    font-size: 36px;
+    line-height: 1.35;
+    text-transform: uppercase;
+}
+
+.events__table {
+    margin-bottom: 48px;
+}
+
+.events__table-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--gray_light);
+}
+
+.events__table-row:first-child {
+    align-items: flex-start;
+}
+
+.events__table-row:last-child {
+    align-items: flex-end;
+    border-bottom: none;
+}
+
+.events__table-row_left {
+    display: inline-block;
+    width: 306px;
+    border-right: 2px solid var(--gray_light);
+    padding-top: 16px;
+    padding-bottom: 14px;
+    padding-right: 16px;
+    color: var(--gray);
+}
+
+.events__table-row:first-child .events__table-row_left {
+    padding-top: 0;
+}
+
+.events__table-row:last-child .events__table-row_left {
+    padding-bottom: 0;
+}
+
+.events__table-row_right {
+    width: 398px;
+    padding-left: 16px;
+}
+
+.events__link {
+    transition: color var(--short) ease-in-out;
+}
+
+.events__link:focus-visible,
+.events__link:hover {
+    color: var(--blue_hover);
+}
+
+.events__link:active {
+    color: var(--blue_active);
+}
+
+
+/* ============================== PLANS ============================== */
+.steps {
+    padding-top: 94px;
+    padding-bottom: 100px;
+}
+
+.steps__title {
+    max-width: 806px;
+    margin-bottom: 54px;
+}
+
+.steps__subtitle {
+    display: inline-block;
+    max-width: 280px;
+    padding-left: 6px;
+    font-family: var(--font__fam), sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: initial;
+}
+
+.steps__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(394px, 1fr));
+    grid-template-rows: repeat(3, minmax(112px, auto));
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.steps__list-item {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    font-weight: 500;
+    background: transparent url('../img/text-background.jpeg') no-repeat center / cover;
+}
+
+.steps__list-item:nth-child(3) {
+    grid-row: span 2;
+}
+
+.steps__list-item:nth-child(7) {
+    grid-column: span 2;
+    padding-right: 290px;
+    position: relative;
+}
+
+.steps__list-item:nth-child(7)::after {
+    position: absolute;
+    content: '';
+    top: -98px;
+    right: -63px;
+    width: 401px;
+    height: 236px;
+    background: transparent url('../img/aircraft.png') no-repeat center / contain;
+}
+
+.steps__list-item_order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--white);
+}
+
+
+/* ============================== PARTICIPANTS ============================== */
+.participants {
+    padding-top: 100px;
+    padding-bottom: 140px;
+}
+
+.participants__title {
+    margin-bottom: 60px;
+}
+
+.participants__slider {
+    position: relative;
+}
+
+.participants__slider-nav {
+    position: absolute;
+    top: -115px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    column-gap: 14px;
+}
+
+.participants__slider-pagination {
+    font-size: 16px;
+}
+
+.participants__slider-pagination_total {
+    color: var(--gray_lighter);
+}
+
+.participants__slider-list {
+    display: flex;
+    column-gap: 20px;
+}
+
+.participants__slider-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 394px;
+    height: 100%;
+    padding-left: 37px;
+    padding-right: 37px;
+}
+
+.participants__slider-img {
+    margin-bottom: 25px;
+    font-size: 0;
+}
+
+.participants__slider-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.participants__slider-name {
+    margin-bottom: 6px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.participants__slider-title {
+    color: var(--gray_lighter);
+}
+
+.participants__slider-link {
+    border: 1px solid var(--blue);
+    border-radius: 62px;
+    padding: 8px 12px 8px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--blue);
+    transition: var(--transition_btn);
+}
+
+.participants__slider-link:focus-visible,
+.participants__slider-link:hover {
+    color: var(--white);
+    background-color: var(--blue);
+}
+
+.participants__slider-link:active {
+    background-color: var(--blue_active);
+}
+
+
+/* ============================== FOOTER ============================== */
+.footer {
+    padding-top: 42px;
+    padding-bottom: 72px;
+    background-color: var(--beige);
+}
+
+.footer__text {
+    font-size: 16px;
+    color: var(--beige_text);
 }
