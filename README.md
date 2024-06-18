@@ -8,3 +8,4 @@
 - pixel perfect
 - responsive design
 - local fonts
+- JS sliders
